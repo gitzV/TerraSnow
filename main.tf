@@ -8,40 +8,40 @@ terraform {
   }
 }
 
+
+# Provider block with credentials
 provider "snowflake" {
   account    = var.snowflake_account
-  username   = var.snowflake_username
+  user   = var.snowflake_username
   password   = var.snowflake_password
-  region     = var.snowflake_region
-  role       = "ACCOUNTADMIN"  # Or another appropriate role
-  
-  # Specify authentication method
-  authenticator = "snowflake"  # For username/password auth
+  role       = "ACCOUNTADMIN"
 }
 
-# Define your variables
+# Variables
 variable "snowflake_account" {
+  description = "The Snowflake account identifier"
   type        = string
-  description = "Snowflake account identifier"
 }
 
 variable "snowflake_username" {
-  type        = string
   description = "Snowflake username"
+  type        = string
 }
 
 variable "snowflake_password" {
+  description = "Snowflake password"
   type        = string
   sensitive   = true
-  description = "Snowflake password"
-}
-
-variable "snowflake_region" {
-  type        = string
-  description = "Snowflake region"
 }
 
 variable "database_name" {
-  type        = string
   description = "Name of the database to create"
+  type        = string
+}
+
+# Database resource
+resource "snowflake_database" "db" {
+  name                        = var.database_name
+  comment                     = "Database created through Terraform"
+  data_retention_time_in_days = 1
 }
