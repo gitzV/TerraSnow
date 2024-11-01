@@ -1,8 +1,6 @@
 # variables.tf
 
-#variable "snowflake_account" {}
-#variable "snowflake_username" {}
-#variable "snowflake_password" {}
-#variable "snowflake_region" {}
-#variable "database_name" {}
-
+snowflake_account = "gxkmoso-pb31214"    # e.g., xy12345.us-east-1
+snowflake_username = "SANJAY"
+snowflake_password = "Temp@123$"
+database_name = "TFDB"
