@@ -1,5 +1,14 @@
 # main.tf -
 
+terraform {
+  required_providers {
+    snowflake = {
+      source  = "Snowflake-Labs/snowflake"
+      version = "0.43.0" # adjust this to the latest version as needed
+    }
+  }
+}
+
 provider "snowflake" {
   account  = var.snowflake_account
   username = var.snowflake_username
