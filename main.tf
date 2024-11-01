@@ -1,4 +1,4 @@
-# main.tf
+# main.tf -
 
 provider "snowflake" {
   account  = var.snowflake_account
