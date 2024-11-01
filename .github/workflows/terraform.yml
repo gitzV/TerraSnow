@@ -1,5 +1,4 @@
 # .github/workflows/terraform.yml
-
 name: Deploy Snowflake Database with Terraform
 
 on:
@@ -10,7 +9,6 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,18 +22,19 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -input=false \
-                             -var="snowflake_account=${{ secrets.SNOWFLAKE_ACCOUNT || '' }}" \
-                             -var="snowflake_username=${{ secrets.SNOWFLAKE_USERNAME || '' }}" \
-                             -var="snowflake_password=${{ secrets.SNOWFLAKE_PASSWORD || '' }}" \
-                             -var="snowflake_region=${{ secrets.SNOWFLAKE_REGION || '' }}" \
-                             -var="database_name=${{ secrets.DATABASE_NAME || '' }}"
-
+        run: |
+          terraform plan -input=false \
+          -var="snowflake_account=${{ secrets.SNOWFLAKE_ACCOUNT || '' }}" \
+          -var="snowflake_username=${{ secrets.SNOWFLAKE_USERNAME || '' }}" \
+          -var="snowflake_password=${{ secrets.SNOWFLAKE_PASSWORD || '' }}" \
+          -var="snowflake_region=${{ secrets.SNOWFLAKE_REGION || '' }}" \
+          -var="database_name=${{ secrets.DATABASE_NAME || '' }}"
 
       - name: Terraform Apply
-        run: terraform apply -input=false -auto-approve -var="snowflake_account=${{ secrets.SNOWFLAKE_ACCOUNT }}" \
-                                                 -var="snowflake_username=${{ secrets.SNOWFLAKE_USERNAME }}" \
-                                                 -var="snowflake_password=${{ secrets.SNOWFLAKE_PASSWORD }}" \
-                                                 -var="snowflake_region=${{ secrets.SNOWFLAKE_REGION }}" \
-                                                 -var="database_name=${{ secrets.DATABASE_NAME }}"
-
+        run: |
+          terraform apply -input=false -auto-approve \
+          -var="snowflake_account=${{ secrets.SNOWFLAKE_ACCOUNT }}" \
+          -var="snowflake_username=${{ secrets.SNOWFLAKE_USERNAME }}" \
+          -var="snowflake_password=${{ secrets.SNOWFLAKE_PASSWORD }}" \
+          -var="snowflake_region=${{ secrets.SNOWFLAKE_REGION }}" \
+          -var="database_name=${{ secrets.DATABASE_NAME }}"
