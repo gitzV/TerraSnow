@@ -15,44 +15,23 @@ provider "snowflake" {
   role     = "ACCOUNTADMIN"
 }
 
-# Drop existing resources if they exist (using locals and snowflake_sql_block)
-resource "snowflake_sql_block" "drop_existing" {
-  statement = <<-SQL
-    BEGIN
-      -- Drop stage if exists
-      DROP STAGE IF EXISTS ${var.database_name}.${var.snowflake_schema}.${var.snowflake_stage};
-      
-      -- Drop schema if exists
-      DROP SCHEMA IF EXISTS ${var.database_name}.${var.snowflake_schema};
-      
-      -- Drop warehouse if exists
-      DROP WAREHOUSE IF EXISTS ${var.snowflake_WH};
-      
-      -- Drop role if exists
-      DROP ROLE IF EXISTS ${var.snowflake_role};
-      
-      -- Drop database if exists
-      DROP DATABASE IF EXISTS ${var.database_name};
-    END;
-  SQL
-
-  // This ensures the SQL block runs before other resources are created
-  depends_on = []
-}
-
-# Database resource
+# Database resource with drop cascade option
 resource "snowflake_database" "db" {
   name                        = var.database_name
   comment                     = "Database created through Terraform"
   data_retention_time_in_days = 1
-  depends_on                  = [snowflake_sql_block.drop_existing]
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 # Create DEV role
 resource "snowflake_role" "dev_role" {
   name    = var.snowflake_role
   comment = "Developer role for database access"
-  depends_on = [snowflake_sql_block.drop_existing]
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 # Create a warehouse
@@ -61,7 +40,9 @@ resource "snowflake_warehouse" "warehouse" {
   warehouse_size = var.snowflake_WH_SIZE
   auto_suspend   = 60
   auto_resume    = true
-  depends_on     = [snowflake_sql_block.drop_existing]
+  lifecycle {
+    create_before_destroy = false
+  }
 }
 
 # Grant warehouse usage to role
