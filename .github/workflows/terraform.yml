@@ -23,12 +23,11 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Terraform Plan
+      run: terraform plan -var-file="variables.tfvars"
 
     - name: Terraform Destro
       run: terraform destroy -var-file="variables.tfvars"
       
-    - name: Terraform Plan
-      run: terraform plan -var-file="variables.tfvars"
-
     - name: Terraform Apply
       run: terraform apply -auto-approve -var-file="variables.tfvars"
