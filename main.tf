@@ -79,25 +79,24 @@ resource "snowflake_stage" "internal_stage" {
   depends_on  = [snowflake_schema.schema]
 }
 
-# Grant stage read/write access
-# Grant stage read/write access
+# Grant stage read access
 resource "snowflake_stage_grant" "stage_grant_read" {
   database_name = snowflake_database.db.name
   schema_name   = snowflake_schema.schema.name
   stage_name    = snowflake_stage.internal_stage.name
-  privilege    =  "READ"
+  privilege     = "READ"
   roles         = [snowflake_role.dev_role.name]
   depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
 }
 
-
+# Grant stage write access
 resource "snowflake_stage_grant" "stage_grant_write" {
   database_name = snowflake_database.db.name
   schema_name   = snowflake_schema.schema.name
   stage_name    = snowflake_stage.internal_stage.name
-  privilege    =  "WRITE"
+  privilege     = "WRITE"
   roles         = [snowflake_role.dev_role.name]
-  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
+  depends_on    = [snowflake_stage_grant.stage_grant_read]
 }
 
 # Additional necessary grants
