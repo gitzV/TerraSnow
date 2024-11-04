@@ -15,6 +15,10 @@ provider "snowflake" {
   role     = "ACCOUNTADMIN"
 }
 
+resource "snowflake_sql" "execute_sql_file" {
+  file = "${path.module}/setup.sql"  # Path to your SQL file
+}
+
 # Database resource with drop cascade option
 resource "snowflake_database" "db" {
   name                        = var.database_name
