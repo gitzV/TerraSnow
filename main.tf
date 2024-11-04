@@ -71,7 +71,7 @@ resource "snowflake_stage_grant" "stage_grant" {
   database_name = snowflake_database.db.name
   schema_name   = snowflake_schema.schema.name
   stage_name    = snowflake_stage.internal_stage.name
-  privilege     = "USAGE"
+  privilege     = "ALL PRIVILEGES"
   roles         = [snowflake_role.dev_role.name]
 }
 
