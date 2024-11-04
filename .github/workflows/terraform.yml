@@ -1,4 +1,4 @@
-name: 'Terraform Snowflake Deploy'
+name: 'Terraform Snowflake Infra Setup'
 
 on:
   push:
