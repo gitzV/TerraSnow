@@ -78,7 +78,7 @@ resource "snowflake_stage_grant" "stage_grant" {
 # Additional necessary grants
 resource "snowflake_database_grant" "database_grant" {
   database_name = snowflake_database.db.name
-  privilege     = "WRITE"
+  privilege     = "ALL PRIVILEGES"
   roles         = [snowflake_role.dev_role.name]
 }
 
