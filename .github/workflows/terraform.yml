@@ -5,12 +5,6 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-env:
-  TF_VAR_snowflake_account: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-  TF_VAR_snowflake_username: ${{ secrets.SNOWFLAKE_USERNAME }}
-  TF_VAR_snowflake_password: ${{ secrets.SNOWFLAKE_PASSWORD }}
-  TF_VAR_database_name: ${{ secrets.DATABASE_NAME }}
-
 jobs:
   terraform:
     name: 'Deploy'
@@ -29,7 +23,7 @@ jobs:
       run: terraform init
 
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform plan -var-file="variables.tfvars"
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -var-file="variables.tfvars"
