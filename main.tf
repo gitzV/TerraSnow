@@ -146,13 +146,9 @@ resource "snowflake_file_transfer" "upload_file" {
   target_type = "STAGE"
   target_stage_location = "@${snowflake_stage.internal_stage.name}"
   file_format = snowflake_file_format.csv_format.name
+  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
   overwrite = true
 }
-
-# Make sure this runs after the stage is created
-  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
-}
-
 
 # Outputs
 output "database_name" {
