@@ -140,16 +140,6 @@ resource "snowflake_file_format" "csv_format" {
 
 ##
 
-resource "snowflake_file_transfer" "upload_file" {
-  source_type = "LOCAL_FILE"
-  source_file = "${path.module}/Direct_spend_data.csv"
-  target_type = "STAGE"
-  target_stage_location = "@${snowflake_stage.internal_stage.name}"
-  file_format = snowflake_file_format.csv_format.name
-  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
-  overwrite = true
-}
-
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
