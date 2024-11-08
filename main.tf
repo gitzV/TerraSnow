@@ -81,7 +81,7 @@ resource "snowflake_stage" "internal_stage" {
   schema      = snowflake_schema.schema.name
   comment     = "Internal stage for file loading"
   depends_on  = [snowflake_schema.schema]
-  file_format = "csv"
+ 
 }
 
 # Grant stage read access
