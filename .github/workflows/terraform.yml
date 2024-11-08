@@ -9,11 +9,11 @@ jobs:
   terraform:
     name: 'Deploy'
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-
+      
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -22,29 +22,27 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install -r requirements.txt
         
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.5.0
-    
+        
     - name: Install SnowSQL
       run: |
-        set -x  # Enable command tracing for debugging
         curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.23-linux_x86_64.bash
         chmod +x snowsql-1.2.23-linux_x86_64.bash
-        mkdir -p ~/bin  # Ensure the directory exists
-        bash snowsql-1.2.23-linux_x86_64.bash -b ~/bin || exit 1  # Exit if installation fails
+        mkdir -p ~/bin
+        bash snowsql-1.2.23-linux_x86_64.bash -b ~/bin || exit 1
         export PATH="$PATH:~/bin"
-        snowsql -v  # Verifies installation and prints SnowSQL version
+        snowsql -v
         
     - name: Terraform Init
       run: terraform init
-
+      
     - name: Terraform Plan
       run: terraform plan -var-file="variables.tfvars"
-
+      
     - name: Terraform Apply
       run: terraform apply -auto-approve -var-file="variables.tfvars"
-
