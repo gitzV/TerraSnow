@@ -29,6 +29,14 @@ jobs:
       with:
         terraform_version: 1.5.0
 
+    - name: Install SnowSQL
+      run: |
+        curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.23-linux_x86_64.bash
+        bash snowsql-1.2.23-linux_x86_64.bash -b ~/bin
+        export PATH="$PATH:~/bin"
+        snowsql -v  # Verifies installation and prints SnowSQL version
+
+        
     - name: Terraform Init
       run: terraform init
 
