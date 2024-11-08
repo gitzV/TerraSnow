@@ -16,14 +16,10 @@ provider "snowflake" {
 }
 
 
-# Resource to execute Python script
+# Step to run Python script with SQL file argument
 resource "null_resource" "run_python" {
-  triggers = {
-    always_run = "${timestamp()}"
-  }
-
   provisioner "local-exec" {
-    command = "python ${path.module}/snowflake_executor.py setup.sql
+    command = "python ${path.module}/snowflake_executor.py ${path.module}/setup.sql"
   }
 }
 
