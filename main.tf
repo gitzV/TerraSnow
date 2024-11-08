@@ -138,16 +138,18 @@ resource "snowflake_file_format" "csv_format" {
   field_delimiter = ","
 }
 
+##
 
-# Upload file to Snowflake stage using SnowSQL
-resource "null_resource" "upload_file" {
-  provisioner "local-exec" {
-    command = <<EOT
-      snowsql -a var.snowflake_account -u var.snowflake_username -r "ACCOUNTADMIN" -q "PUT '/Direct_spend_data.csv' @snowflake_database.db.name.snowflake_schema.schema.name.snowflake_stage.internal_stage AUTO_COMPRESS=TRUE OVERWRITE=TRUE"
-    EOT
-  }
+resource "snowflake_file_transfer" "upload_file" {
+  source_type = "LOCAL_FILE"
+  source_file = "${path.module}/Direct_spend_data.csv"
+  target_type = "STAGE"
+  target_stage_location = "@${snowflake_stage.internal_stage.name}"
+  file_format = snowflake_file_format.csv_format.name
+  overwrite = true
+}
 
-  # Make sure this runs after the stage is created
+# Make sure this runs after the stage is created
   depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
 }
 
