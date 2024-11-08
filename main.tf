@@ -25,6 +25,14 @@ resource "null_resource" "run_python" {
   }
 }
 
+resource "snowflake_database" "example_db" {
+  name = database_name
+
+  lifecycle {
+    prevent_destroy = false  # Allows Terraform to delete the database
+  }
+}
+
 # create DB
 resource "snowflake_database" "db" {
   name                        = var.database_name
