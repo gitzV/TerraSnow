@@ -25,24 +25,19 @@ resource "null_resource" "run_python" {
   }
 }
 
-# Database resource with drop cascade option
+# create DB
 resource "snowflake_database" "db" {
   name                        = var.database_name
   comment                     = "Database created through Terraform"
   data_retention_time_in_days = 1
-  lifecycle {
-    create_before_destroy = false
-  }
 }
 
-# Create DEV role
+$ create role
 resource "snowflake_role" "dev_role" {
   name    = var.snowflake_role
   comment = "Developer role for database access"
-  lifecycle {
-    create_before_destroy = false
-  }
 }
+
 
 # Create a warehouse
 resource "snowflake_warehouse" "warehouse" {
