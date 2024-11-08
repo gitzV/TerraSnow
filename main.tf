@@ -131,8 +131,8 @@ resource "snowflake_schema_grant" "schema_create_view" {
 # Define a File Format (CSV Format Example)
 resource "snowflake_file_format" "csv_format" {
   name     = "CSV_FORMAT"
-  database = snowflake_database.example_db.name
-  schema   = snowflake_schema.example_schema.name
+  database = snowflake_database.db.name
+  schema   = snowflake_schema.schema.name
   format_type = "CSV"
   csv_compression = "AUTO"
   skip_header = 1
