@@ -128,6 +128,17 @@ resource "snowflake_schema_grant" "schema_create_view" {
   depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
 }
 
+# Define a File Format (CSV Format Example)
+resource "snowflake_file_format" "csv_format" {
+  name     = "CSV_FORMAT"
+  database = snowflake_database.example_db.name
+  schema   = snowflake_schema.example_schema.name
+  format_type = "CSV"
+  csv_compression = "AUTO"
+  skip_header = 1
+  field_delimiter = ","
+}
+
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
