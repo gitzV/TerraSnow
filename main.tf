@@ -29,6 +29,7 @@ resource "null_resource" "run_python" {
 resource "snowflake_database" "db" {
   name                        = var.database_name
   comment                     = "Database created through Terraform"
+  depends_on = [null_resource.run_python]
   
 }
 
