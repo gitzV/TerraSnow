@@ -138,6 +138,14 @@ resource "snowflake_file_format" "csv_format" {
   field_delimiter = ","
 }
 
+# Upload File to Internal Stage
+resource "snowflake_file" "spend_file_upload" {
+  stage            = snowflake_stage.internal_stage.name
+  path             = "${path.module}/Direct_spend_data.csv"   # Local path of the file to upload
+  #destination_path = "${path.module}/folder-in-stage"         # Optional: Specify the destination folder in the stage
+}
+
+
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
