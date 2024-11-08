@@ -138,11 +138,17 @@ resource "snowflake_file_format" "csv_format" {
   field_delimiter = ","
 }
 
-# Upload File to Internal Stage
-resource "snowflake_file" "spend_file_upload" {
-  stage            = snowflake_stage.internal_stage.name
-  path             = "${path.module}/Direct_spend_data.csv"   # Local path of the file to upload
-  #destination_path = "${path.module}/folder-in-stage"         # Optional: Specify the destination folder in the stage
+
+# Upload file to Snowflake stage using SnowSQL
+resource "null_resource" "upload_file" {
+  provisioner "local-exec" {
+    command = <<EOT
+      snowsql -a var.snowflake_account -u var.snowflake_username -r "ACCOUNTADMIN" -q "PUT '/Direct_spend_data.csv' @snowflake_database.db.name.snowflake_schema.schema.name.snowflake_stage.internal_stage AUTO_COMPRESS=TRUE OVERWRITE=TRUE"
+    EOT
+  }
+
+  # Make sure this runs after the stage is created
+  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
 }
 
 
