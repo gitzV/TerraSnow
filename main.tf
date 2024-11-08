@@ -37,6 +37,7 @@ resource "snowflake_database" "db" {
 resource "snowflake_role" "dev_role" {
   name    = var.snowflake_role
   comment = "Developer role for database access"
+  depends_on = [snowflake_database.db]
 }
 
 
@@ -45,10 +46,7 @@ resource "snowflake_warehouse" "warehouse" {
   name           = var.snowflake_WH
   warehouse_size = var.snowflake_WH_SIZE
   auto_suspend   = 60
-  auto_resume    = true
-  lifecycle {
-    create_before_destroy = false
-  }
+  depends_on = [snowflake_role.dev_role]
 }
 
 # Grant warehouse usage to role
