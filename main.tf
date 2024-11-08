@@ -16,6 +16,17 @@ provider "snowflake" {
 }
 
 
+# Resource to execute Python script
+resource "null_resource" "run_python" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "python ${path.module}/snowflake_executor.py setup.sql
+  }
+}
+
 # Database resource with drop cascade option
 resource "snowflake_database" "db" {
   name                        = var.database_name
