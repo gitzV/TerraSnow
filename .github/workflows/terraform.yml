@@ -32,8 +32,6 @@ jobs:
     - name: Download and Install SnowSQL
       run: |
         curl -L -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-linux_x86_64.pkg
-        sudo dpkg -i snowsql-linux_x86_64.pkg
-        sudo ln -s /usr/local/bin/snowsql /usr/bin/snowsql
 
     - name: Verify SnowSQL Installation
       run: |
