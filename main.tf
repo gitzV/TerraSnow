@@ -32,7 +32,7 @@ resource "snowflake_database" "db" {
   data_retention_time_in_days = 1
 }
 
-$ create role
+# create role
 resource "snowflake_role" "dev_role" {
   name    = var.snowflake_role
   comment = "Developer role for database access"
