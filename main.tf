@@ -15,11 +15,13 @@ provider "snowflake" {
   role     = "ACCOUNTADMIN"
 }
 
-
-# Step to run Python script with SQL file argument
+# Install dependencies and run Python script
 resource "null_resource" "run_python" {
   provisioner "local-exec" {
-    command = "python ${path.module}/snowflake_executor.py ${path.module}/setup.sql"
+    command = <<-EOT
+      pip install snowflake-connector-python
+      python ${path.module}/snowflake_executor.py ${path.module}/setup.sql
+    EOT
   }
 }
 
