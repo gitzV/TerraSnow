@@ -29,7 +29,7 @@ resource "null_resource" "run_python" {
 resource "snowflake_database" "db" {
   name                        = var.database_name
   comment                     = "Database created through Terraform"
-  data_retention_time_in_days = 1
+  
 }
 
 # create role
