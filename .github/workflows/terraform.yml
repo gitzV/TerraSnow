@@ -36,7 +36,6 @@ jobs:
         export PATH="$PATH:~/bin"
         snowsql -v  # Verifies installation and prints SnowSQL version
 
-        
     - name: Terraform Init
       run: terraform init
 
