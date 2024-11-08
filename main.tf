@@ -134,7 +134,6 @@ resource "snowflake_file_format" "csv_format" {
   database = snowflake_database.db.name
   schema   = snowflake_schema.schema.name
   format_type = "CSV"
-  csv_compression = "AUTO"
   skip_header = 1
   field_delimiter = ","
 }
