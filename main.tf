@@ -62,7 +62,7 @@ resource "snowflake_schema" "schema" {
   database = snowflake_database.db.name
   name     = var.snowflake_schema
   comment  = "Schema for development work"
-  depends_on = [snowflake_database.db,,"ACCOUNTADMIN"]
+  depends_on = [snowflake_database.db]
 }
 
 # Grant schema usage
@@ -70,7 +70,7 @@ resource "snowflake_schema_grant" "schema_grant" {
   database_name = snowflake_database.db.name
   schema_name   = snowflake_schema.schema.name
   privilege     = "USAGE"
-  roles         = [snowflake_role.dev_role.name,,"ACCOUNTADMIN"]
+  roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
   depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
 }
 
