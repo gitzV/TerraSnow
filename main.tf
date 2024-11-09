@@ -155,7 +155,7 @@ resource "null_resource" "run_query" {
 
 resource "time_sleep" "wait_for_stage_creation" {
   depends_on = [snowflake_stage.internal_stage]
-  create_duration = "10s"  # Adjust as needed
+  create_duration = "60s"  # Adjust as needed
 }
 
 
