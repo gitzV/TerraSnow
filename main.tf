@@ -167,8 +167,6 @@ resource "null_resource" "install_snowsql" {
       # Make executable
       chmod +x ~/snowflake/snowsql
 
-      # Verify installation location
-      find / -name snowsql 2>/dev/null
 
     EOF
   }
