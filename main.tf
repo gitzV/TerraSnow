@@ -140,21 +140,39 @@ resource "snowflake_file_format" "csv_format" {
 
 ##
 
-# Load data using null resource
-resource "null_resource" "load_csv" {
-
+# Install SnowSQL
+resource "null_resource" "install_snowsql" {
   provisioner "local-exec" {
-    environment = {
-      SNOWSQL_ACCOUNT = var.snowflake_account
-      SNOWSQL_USER    = var.snowflake_username
-      SNOWSQL_PWD     = var.snowflake_password
-    }
+    command = <<-EOF
+      # Create installation directory
+      mkdir -p ~/snowflake
+      
+      # Download SnowSQL
+      curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
+      
+      # Install SnowSQL
+      bash snowsql-1.2.9-linux_x86_64.bash
+      
+      # Create config directory
+      mkdir -p ~/.snowsql
 
-    command = <<EOF
-      "snowsql --v"
-EOF
+      # verify snowsql
+      snowsql -v
+      
+      # Create config file
+      cat > ~/.snowsql/config <<CONFIG
+      [connections.default]
+      accountname = ${var.snowflake_account}
+      username = ${var.snowflake_username}
+      password = ${var.snowflake_password}
+      CONFIG
+      
+      # Make executable
+      chmod +x ~/snowflake/snowsql
+    EOF
   }
 }
+
 
 # Outputs
 output "database_name" {
