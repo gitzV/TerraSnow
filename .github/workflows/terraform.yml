@@ -43,7 +43,7 @@ jobs:
       run: |
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
-        [connections.default]
+        [connections.default1]
         accountname = $SNOWSQL_ACCOUNT
         username = $SNOWSQL_USER
         password = $SNOWSQL_PWD
@@ -53,7 +53,7 @@ jobs:
       run: snowsql -v  
 
     - name: Run SnowSQL Command
-      run: snowsql -c my_connection
+      run: snowsql -c default1
      
           
     - name: Terraform Init
