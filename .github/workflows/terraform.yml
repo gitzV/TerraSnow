@@ -37,9 +37,9 @@ jobs:
 
     - name: Configure SnowSQL
       env:
-        SNOWSQL_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-        SNOWSQL_USER: ${{ secrets.SNOWFLAKE_USER }}
-        SNOWSQL_PWD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+        SNOWSQL_ACCOUNT: ${{ var.snowflake_account }}
+        SNOWSQL_USER: ${{ var.snowflake_username }}
+        SNOWSQL_PWD: ${{ var.snowflake_password }}
       run: |
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
