@@ -37,13 +37,13 @@ jobs:
 
     - name: Configure SnowSQL
       env:
-        SNOWSQL_ACCOUNT: gxkmoso-pb31214 
+        SNOWSQL_ACCOUNT: gxkmoso-pb31214.snowflakecomputing.com
         SNOWSQL_USER:  SANJAY
         SNOWSQL_PWD:  Temp@123$ 
       run: |
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
-        [connections.default1]
+        [connections.default]
         accountname = $SNOWSQL_ACCOUNT
         username = $SNOWSQL_USER
         password = $SNOWSQL_PWD
@@ -53,7 +53,7 @@ jobs:
       run: snowsql -v  
 
     - name: Run SnowSQL Command
-      run: snowsql -c default1
+      run: snowsql -c default
 
 
     - name: Run SnowSQL show db Command
