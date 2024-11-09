@@ -167,22 +167,27 @@ resource "null_resource" "install_snowsql" {
       # Make executable
       chmod +x ~/snowflake/snowsql
 
+      # Add SnowSQL directory to PATH
+      export PATH=$PATH:~/snowflake
+
 
     EOF
   }
 }
 
-# Load data
-resource "null_resource" "load_csv" {
+
+# Check SnowSQL version with the corrected path
+resource "null_resource" "check_snowsql_version" {
   provisioner "local-exec" {
-        command = "~/bin/snowsql --version"
+    command = "~/snowflake/snowsql --version"
   }
-  
+
   depends_on = [
     null_resource.install_snowsql,
     snowflake_stage.internal_stage
   ]
 }
+
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
