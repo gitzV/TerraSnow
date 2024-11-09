@@ -44,9 +44,10 @@ jobs:
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
         [connections.default]
-        accountname = $SNOWSQL_ACCOUNT
-        username = $SNOWSQL_USER
-        password = $SNOWSQL_PWD
+        accountname = gxkmoso-pb31214
+        username = SANJAY
+        password = Temp@123$
+        role = ACCOUNTADMIN
         EOF
 
     - name: Verify SnowSQL installation
