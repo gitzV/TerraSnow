@@ -139,7 +139,7 @@ resource "snowflake_file_format" "csv_format" {
 }
 
 ##
-/*
+
 # Install SnowSQL
 resource "null_resource" "install_snowsql" {
   provisioner "local-exec" {
@@ -174,7 +174,7 @@ resource "null_resource" "install_snowsql" {
     EOF
   }
 }
-*/
+
 
 # Check SnowSQL version with the corrected path
 resource "null_resource" "check_snowsql_version" {
