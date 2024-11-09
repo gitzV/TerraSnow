@@ -48,7 +48,9 @@ jobs:
         username = $SNOWSQL_USER
         password = $SNOWSQL_PWD
         EOF
-          
+
+    - name: Verify SnowSQL installation
+      run: snowsql -v          
           
     - name: Terraform Init
       run: terraform init
