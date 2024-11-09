@@ -159,7 +159,7 @@ resource "null_resource" "upload_csv_to_stage" {
       ~/snowflake/snowsql -q "PUT file://${path.module}/Direct_spend_data.csv @${snowflake_database.db.name}.${snowflake_schema.schema.name}.${snowflake_stage.internal_stage.name} ;"
     EOT
   }
-depends_on = [ snowflake_stage.internal_stage,snowflake_stage_grant.stage_grant_WRITE]
+depends_on = [ snowflake_stage.internal_stage,snowflake_stage_grant.stage_grant_write]
 }
 
 
