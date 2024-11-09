@@ -170,15 +170,12 @@ resource "null_resource" "install_snowsql" {
   }
 }
 
-
 # Load data
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
-    command = <<-EOF
-      snowsql --version
-    EOF
+    command = "snowsql --version"
   }
-
+  
   depends_on = [
     null_resource.install_snowsql,
     snowflake_stage.internal_stage
