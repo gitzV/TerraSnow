@@ -181,12 +181,20 @@ resource "null_resource" "check_snowsql_version" {
   provisioner "local-exec" {
     command = "~/snowflake/snowsql --version"  
   }
-
   depends_on = [
    # null_resource.install_snowsql,
     snowflake_stage.internal_stage
   ]
 }
+
+resource "null_resource" "run_query" {
+  provisioner "local-exec" {
+    command = <<EOT
+    ~/snowflake/snowsql -c my_connection_name -q "SELECT current_timestamp();"
+    EOT
+  }
+}
+
 
 # Outputs
 output "database_name" {
