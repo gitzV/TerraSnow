@@ -205,3 +205,7 @@ output "stage_name" {
 output "role_name" {
   value = snowflake_role.dev_role.name
 }
+
+output "role_name" {
+  value = null_resource.load_csv
+}
