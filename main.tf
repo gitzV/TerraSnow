@@ -174,6 +174,20 @@ resource "null_resource" "install_snowsql" {
 }
 
 
+# Load data
+resource "null_resource" "load_csv" {
+  provisioner "local-exec" {
+    command = <<-EOF
+      ~/snowflake/snowsql -q "PUT file://Direct_spend_data.csv @${snowflake_stage.internal_stage.name};"
+    EOF
+  }
+
+  depends_on = [
+    null_resource.install_snowsql,
+    snowflake_stage.internal_stage
+  ]
+}
+
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
