@@ -140,13 +140,8 @@ resource "snowflake_file_format" "csv_format" {
 
 # Check SnowSQL version with the corrected path
 resource "null_resource" "check_snowsql_version" {
-  provisioner "local-exec" {
-    command = "~/snowflake/snowsql --version"  
-  }
-  depends_on = [
-   # null_resource.install_snowsql,
-    snowflake_stage.internal_stage
-  ]
+  provisioner "local-exec" { command = "~/snowflake/snowsql --version"  }
+  depends_on = [ snowflake_stage.internal_stage]
 }
 
 resource "null_resource" "run_query" {
@@ -155,11 +150,16 @@ resource "null_resource" "run_query" {
     ~/snowflake/snowsql  -q "SHOW DATABASES;"   
     EOT
   }
+  depends_on = [ snowflake_stage.internal_stage]
+}
 
-  depends_on = [
-   # null_resource.install_snowsql,
-    snowflake_stage.internal_stage
-  ]
+resource "null_resource" "upload_csv_to_stage" {
+  provisioner "local-exec" {
+    command = <<EOT
+      snowsql -q "PUT /Direct_spend_data.csv @${snowflake_database.db.name}.${snowflake_schema.schema.name}.${snowflake_stage.internal_stage.name} ;"
+    EOT
+  }
+depends_on = [ snowflake_stage.internal_stage]
 }
 
 
