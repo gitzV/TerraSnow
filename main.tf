@@ -210,8 +210,8 @@ output "role_name" {
 }
 
 # Ensure the output depends on the version-checking resource
-output "snowsql_version" {
+output "check_snowsql_version" {
   value       = file("snowsql_version.txt")
   description = "The version of SnowSQL installed."
-  depends_on  = [null_resource.get_snowsql_version]
+  depends_on  = [null_resource.check_snowsql_version]
 }
