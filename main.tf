@@ -153,13 +153,19 @@ resource "null_resource" "run_query" {
   depends_on = [ snowflake_stage.internal_stage]
 }
 
+resource "time_sleep" "wait_for_stage_creation" {
+  depends_on = [snowflake_stage.internal_stage]
+  create_duration = "10s"  # Adjust as needed
+}
+
+
 resource "null_resource" "upload_csv_to_stage" {
   provisioner "local-exec" {
     command = <<EOT
       ~/snowflake/snowsql -q "PUT file://${path.module}/Direct_spend_data.csv @TFDB.DEV.snowflake_internal_stage ;"
     EOT
   }
-depends_on = [ snowflake_stage.internal_stage,snowflake_stage_grant.stage_grant_write,null_resource.run_query]
+depends_on = [ snowflake_stage.internal_stage,snowflake_stage_grant.stage_grant_write,null_resource.run_query,time_sleep.wait_for_stage_creation]
 }
 
 
