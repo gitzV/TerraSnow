@@ -205,9 +205,6 @@ output "stage_name" {
   value = snowflake_stage.internal_stage.name
 }
 
-output "role_name" {
-  value = null_resource.check_snowsql_version.name
-}
 
 # Ensure the output depends on the version-checking resource
 output "check_snowsql_version" {
