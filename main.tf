@@ -140,6 +140,23 @@ resource "snowflake_file_format" "csv_format" {
 
 ##
 
+# Load data using null resource
+resource "null_resource" "load_csv" {
+
+  provisioner "local-exec" {
+    environment = {
+      SNOWSQL_ACCOUNT = var.snowflake_account
+      SNOWSQL_USER    = var.snowflake_username
+      SNOWSQL_PWD     = var.snowflake_password
+    }
+
+    command = <<EOF
+      snowsql -q "
+      PUT /Direct_spend_data.csv @${snowflake_stage.internal_stage};"
+    EOF
+  }
+}
+
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
