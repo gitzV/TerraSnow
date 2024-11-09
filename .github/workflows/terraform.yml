@@ -53,7 +53,8 @@ jobs:
       run: snowsql -v  
 
     - name: Run SnowSQL Command
-      run: snowsql -q "SELECT current_version();"      
+      run: snowsql -c my_connection
+     
           
     - name: Terraform Init
       run: terraform init
