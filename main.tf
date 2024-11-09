@@ -173,7 +173,7 @@ resource "null_resource" "install_snowsql" {
 # Load data
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
-    command = "snowsql --version"
+    command = "~/.snowsql/snowsql --version"
   }
   
   depends_on = [
@@ -181,7 +181,6 @@ resource "null_resource" "load_csv" {
     snowflake_stage.internal_stage
   ]
 }
-
 # Outputs
 output "database_name" {
   value = snowflake_database.db.name
