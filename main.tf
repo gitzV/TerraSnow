@@ -156,7 +156,7 @@ resource "null_resource" "run_query" {
 resource "null_resource" "upload_csv_to_stage" {
   provisioner "local-exec" {
     command = <<EOT
-      ~/snowflake/snowsql -q "PUT Direct_spend_data.csv @${snowflake_database.db.name}.${snowflake_schema.schema.name}.${snowflake_stage.internal_stage.name} ;"
+      ~/snowflake/snowsql -q "PUT ${path.module}/Direct_spend_data.csv @${snowflake_database.db.name}.${snowflake_schema.schema.name}.${snowflake_stage.internal_stage.name} ;"
     EOT
   }
 depends_on = [ snowflake_stage.internal_stage]
