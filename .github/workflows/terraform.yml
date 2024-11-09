@@ -37,9 +37,9 @@ jobs:
 
     - name: Configure SnowSQL
       env:
-        SNOWSQL_ACCOUNT: snowflake_account 
-        SNOWSQL_USER:  snowflake_username
-        SNOWSQL_PWD:  snowflake_password 
+        SNOWSQL_ACCOUNT: ABC 
+        SNOWSQL_USER:  DEF
+        SNOWSQL_PWD:  EFG 
       run: |
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
