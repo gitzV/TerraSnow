@@ -34,7 +34,21 @@ jobs:
         curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
         SNOWSQL_DEST=~/snowflake SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.9-linux_x86_64.bash
         echo "~/snowflake" >> $GITHUB_PATH 
-        snowsql -v
+
+    - name: Configure SnowSQL
+      env:
+        SNOWSQL_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+        SNOWSQL_USER: ${{ secrets.SNOWFLAKE_USER }}
+        SNOWSQL_PWD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      run: |
+        mkdir -p ~/.snowsql
+        cat > ~/.snowsql/config << EOF
+        [connections.default]
+        accountname = $SNOWSQL_ACCOUNT
+        username = $SNOWSQL_USER
+        password = $SNOWSQL_PWD
+        EOF
+          
           
     - name: Terraform Init
       run: terraform init
