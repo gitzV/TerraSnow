@@ -54,15 +54,8 @@ jobs:
     - name: Verify SnowSQL installation
       run: snowsql -v  
 
-
     - name: Run SnowSQL show db Command
       run: snowsql -q "SHOW DATABASES;"   
-
-
-    - name: Run SnowSQL Command
-      run: snowsql -c 
-
-
           
     - name: Terraform Init
       run: terraform init
