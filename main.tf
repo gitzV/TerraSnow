@@ -178,7 +178,7 @@ resource "null_resource" "install_snowsql" {
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
     command = <<-EOF
-      ~/snowflake/snowsql -q "PUT file://Direct_spend_data.csv @${snowflake_stage.internal_stage.name};"
+      ~/snowflake/snowsql --version
     EOF
   }
 
