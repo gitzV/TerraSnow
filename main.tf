@@ -179,7 +179,7 @@ resource "null_resource" "install_snowsql" {
 # Check SnowSQL version with the corrected path
 resource "null_resource" "check_snowsql_version" {
   provisioner "local-exec" {
-    command = "~/snowflake/snowsql --version  
+    command = "~/snowflake/snowsql --version"  
   }
 
   depends_on = [
