@@ -53,7 +53,7 @@ jobs:
       run: snowsql -v  
 
     - name: Run SnowSQL Command
-      run: snowsql -c default
+      run: snowsql -c 
 
 
     - name: Run SnowSQL show db Command
