@@ -151,8 +151,9 @@ resource "null_resource" "load_csv" {
     }
 
     command = <<EOF
-      snowsql -q "PUT file://Direct_spend_data.csv @${snowflake_stage.internal_stage.name};"
-    EOF
+     # snowsql -q "PUT file://Direct_spend_data.csv @${snowflake_stage.internal_stage.name};"
+    snowsql -v
+EOF
   }
 }
 
