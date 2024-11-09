@@ -50,7 +50,10 @@ jobs:
         EOF
 
     - name: Verify SnowSQL installation
-      run: snowsql -v          
+      run: snowsql -v  
+
+    - name: Run SnowSQL Command
+      run: snowsql -q "SELECT current_version();"      
           
     - name: Terraform Init
       run: terraform init
