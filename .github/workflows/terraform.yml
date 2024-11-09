@@ -43,7 +43,7 @@ jobs:
       run: |
         mkdir -p ~/.snowsql
         cat > ~/.snowsql/config << EOF
-        [connections.default]
+        [connections]
         accountname = gxkmoso-pb31214
         username = SANJAY
         password = Temp@123$
