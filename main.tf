@@ -90,7 +90,7 @@ resource "snowflake_stage_grant" "stage_grant_read" {
   schema_name   = snowflake_schema.schema.name
   stage_name    = snowflake_stage.internal_stage.name
   privilege     = "READ"
-  roles         = [snowflake_role.dev_role.name]
+  roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
   depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
 }
 
