@@ -190,7 +190,7 @@ resource "null_resource" "check_snowsql_version" {
 resource "null_resource" "run_query" {
   provisioner "local-exec" {
     command = <<EOT
-    ~/snowflake/snowsql -c my_connection_name -q "SELECT current_timestamp();"
+    ~/snowflake/snowsql  -q "SHOW DATABASES;"   
     EOT
   }
 }
