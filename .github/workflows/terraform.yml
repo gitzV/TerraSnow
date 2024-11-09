@@ -49,6 +49,7 @@ jobs:
         password = Temp@123$
         role = ACCOUNTADMIN
         EOF
+        chmod 600 ~/.snowsql/config
 
     - name: Verify SnowSQL installation
       run: snowsql -v  
