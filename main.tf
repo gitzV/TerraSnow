@@ -156,7 +156,7 @@ resource "null_resource" "install_snowsql" {
       # Create config directory
       mkdir -p ~/.snowsql
 
-      # verify snowsql
+      # verify snowsqls
       snowsql -v
       
       # Create config file
