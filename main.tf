@@ -138,44 +138,6 @@ resource "snowflake_file_format" "csv_format" {
   field_delimiter = ","
 }
 
-##
-/*
-# Install SnowSQL
-resource "null_resource" "install_snowsql" {
-  provisioner "local-exec" {
-    command = <<-EOF
-      # Create installation directory
-      mkdir -p ~/snowflake
-      
-      # Download SnowSQL
-      curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
-      
-      # Install SnowSQL
-      bash snowsql-1.2.9-linux_x86_64.bash
-      
-      # Create config directory
-      mkdir -p ~/.snowsql
-
-      # Create config file
-      cat > ~/.snowsql/config <<CONFIG
-      [connections.default]
-      accountname = var.snowflake_account
-      username = var.snowflake_username
-      password = var.snowflake_password
-      CONFIG
-      
-      # Make executable
-      chmod +x ~/snowflake/snowsql
-
-      # Add SnowSQL directory to PATH
-      export PATH=$PATH:~/snowflake
-
-
-    EOF
-  }
-}
-*/
-
 # Check SnowSQL version with the corrected path
 resource "null_resource" "check_snowsql_version" {
   provisioner "local-exec" {
