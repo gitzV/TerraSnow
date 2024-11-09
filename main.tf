@@ -205,10 +205,3 @@ output "stage_name" {
   value = snowflake_stage.internal_stage.name
 }
 
-
-# Ensure the output depends on the version-checking resource
-output "check_snowsql_version" {
-  value       = file("snowsql_version.txt")
-  description = "The version of SnowSQL installed."
-  depends_on  = [null_resource.check_snowsql_version]
-}
