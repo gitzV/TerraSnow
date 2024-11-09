@@ -179,7 +179,7 @@ resource "null_resource" "install_snowsql" {
 # Check SnowSQL version with the corrected path
 resource "null_resource" "check_snowsql_version" {
   provisioner "local-exec" {
-    command = "~/snowflake/snowsql --version"
+    command = "~/snowflake/snowsql --version  > snowsql_version.txt"
   }
 
   depends_on = [
@@ -206,6 +206,11 @@ output "stage_name" {
 }
 
 output "role_name" {
-  value = snowflake_role.dev_role.name
+  value = null_resource.check_snowsql_version.name
 }
 
+# Output the SnowSQL version
+output "snowsql_version" {
+  value = file("snowsql_version.txt")
+  description = "The version of SnowSQL installed."
+}
