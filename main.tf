@@ -162,9 +162,9 @@ resource "null_resource" "install_snowsql" {
       # Create config file
       cat > ~/.snowsql/config <<CONFIG
       [connections.default]
-      accountname = ${var.snowflake_account}
-      username = ${var.snowflake_username}
-      password = ${var.snowflake_password}
+      accountname = var.snowflake_account
+      username = var.snowflake_username
+      password = var.snowflake_password
       CONFIG
       
       # Make executable
