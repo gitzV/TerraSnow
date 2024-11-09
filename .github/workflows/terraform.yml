@@ -54,7 +54,11 @@ jobs:
 
     - name: Run SnowSQL Command
       run: snowsql -c default1
-     
+
+
+    - name: Run SnowSQL show db Command
+      run: snowsql -q "SHOW DATABASES;"   
+
           
     - name: Terraform Init
       run: terraform init
