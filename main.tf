@@ -175,7 +175,7 @@ resource "null_resource" "install_snowsql" {
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
     command = <<-EOF
-      snowsql --v
+      snowsql -v
     EOF
   }
 
