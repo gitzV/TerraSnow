@@ -156,9 +156,6 @@ resource "null_resource" "install_snowsql" {
       # Create config directory
       mkdir -p ~/.snowsql
 
-      # verify snowsqls
-      snowsql -v
-      
       # Create config file
       cat > ~/.snowsql/config <<CONFIG
       [connections.default]
@@ -178,7 +175,7 @@ resource "null_resource" "install_snowsql" {
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
     command = <<-EOF
-      ~/snowflake/snowsql --version
+      snowsql --v
     EOF
   }
 
