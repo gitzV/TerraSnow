@@ -166,6 +166,10 @@ resource "null_resource" "install_snowsql" {
       
       # Make executable
       chmod +x ~/snowflake/snowsql
+
+      # Verify installation location
+      find / -name snowsql 2>/dev/null
+
     EOF
   }
 }
@@ -173,7 +177,7 @@ resource "null_resource" "install_snowsql" {
 # Load data
 resource "null_resource" "load_csv" {
   provisioner "local-exec" {
-    command = "~/.snowsql/snowsql --version"
+        command = "~/bin/snowsql --version"
   }
   
   depends_on = [
