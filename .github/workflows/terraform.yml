@@ -14,7 +14,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-        
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
@@ -28,3 +27,23 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve -var-file="variables.tfvars"
+
+  destroy:
+    name: 'Destroy'
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }} # Only run destroy on manual trigger
+    needs: terraform
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.5.0
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve -var-file="variables.tfvars"
