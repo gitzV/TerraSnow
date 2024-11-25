@@ -30,7 +30,7 @@ resource "null_resource" "run_python" {
 resource "snowflake_role" "dev_role" {
   name    = var.snowflake_role
   comment = "Developer role for database access"
-  depends_on = [snowflake_database.db]
+  #depends_on = [snowflake_database.db]
 }
 
 
@@ -39,7 +39,7 @@ resource "snowflake_warehouse" "warehouse" {
   name           = var.snowflake_WH
   warehouse_size = var.snowflake_WH_SIZE
   auto_suspend   = 60
-  depends_on = [snowflake_role.dev_role]
+  #depends_on = [snowflake_role.dev_role]
 }
 
 # Grant warehouse usage to role
@@ -57,7 +57,7 @@ resource "snowflake_schema_grant" "schema_grant" {
   schema_name   = snowflake_schema.schema.name
   privilege     = "USAGE"
   roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
-  depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
+  #depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
 }
 
 # Create internal stage
@@ -66,7 +66,7 @@ resource "snowflake_stage" "internal_stage" {
   database    = snowflake_database.db.name
   schema      = snowflake_schema.schema.name
   comment     = "Internal stage for file loading"
-  depends_on  = [snowflake_schema.schema]
+  #depends_on  = [snowflake_schema.schema]
  
 }
 
@@ -77,7 +77,7 @@ resource "snowflake_stage_grant" "stage_grant_read" {
   stage_name    = snowflake_stage.internal_stage.name
   privilege     = "READ"
   roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
-  depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
+  #depends_on    = [snowflake_stage.internal_stage, snowflake_role.dev_role]
 }
 
 # Grant stage write access
@@ -95,7 +95,7 @@ resource "snowflake_database_grant" "database_grant" {
   database_name = snowflake_database.db.name
   privilege     = "USAGE"
   roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
-  depends_on    = [snowflake_database.db, snowflake_role.dev_role]
+  #depends_on    = [snowflake_database.db, snowflake_role.dev_role]
 }
 
 resource "snowflake_schema_grant" "schema_create_table" {
@@ -103,7 +103,7 @@ resource "snowflake_schema_grant" "schema_create_table" {
   schema_name   = snowflake_schema.schema.name
   privilege     = "CREATE TABLE"
   roles         = [snowflake_role.dev_role.name,"ACCOUNTADMIN"]
-  depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
+  #depends_on    = [snowflake_schema.schema, snowflake_role.dev_role]
 }
 
 resource "snowflake_schema_grant" "schema_create_view" {
