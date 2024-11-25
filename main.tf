@@ -25,13 +25,6 @@ resource "null_resource" "run_python" {
   }
 }
 
-# create DB
-resource "snowflake_database" "db" {
-  name                        = var.database_name
-  comment                     = "Database created through Terraform"
-  depends_on = [null_resource.run_python]
-  
-}
 
 # create role
 resource "snowflake_role" "dev_role" {
@@ -57,13 +50,6 @@ resource "snowflake_warehouse_grant" "warehouse_grant" {
   depends_on     = [snowflake_warehouse.warehouse, snowflake_role.dev_role]
 }
 
-# Create schema
-resource "snowflake_schema" "schema" {
-  database = snowflake_database.db.name
-  name     = var.snowflake_schema
-  comment  = "Schema for development work"
-  depends_on = [snowflake_database.db]
-}
 
 # Grant schema usage
 resource "snowflake_schema_grant" "schema_grant" {
@@ -137,37 +123,6 @@ resource "snowflake_file_format" "csv_format" {
   skip_header = 1
   field_delimiter = ","
 }
-
-# Check SnowSQL version with the corrected path
-resource "null_resource" "check_snowsql_version" {
-  provisioner "local-exec" { command = "~/snowflake/snowsql --version"  }
-  depends_on = [ snowflake_stage.internal_stage]
-}
-
-resource "null_resource" "run_query" {
-  provisioner "local-exec" {
-    command = <<EOT
-    ~/snowflake/snowsql  -q "SHOW DATABASES;"   
-    EOT
-  }
-  depends_on = [ snowflake_stage.internal_stage]
-}
-
-resource "time_sleep" "wait_for_stage_creation" {
-  depends_on = [snowflake_stage.internal_stage]
-  create_duration = "60s"  # Adjust as needed
-}
-
-
-resource "null_resource" "upload_csv_to_stage" {
-  provisioner "local-exec" {
-    command = <<EOT
-      ~/snowflake/snowsql -q "PUT file://${path.module}/Direct_spend_data.csv @TFDB.DEV.snowflake_internal_stage ;"
-    EOT
-  }
-depends_on = [ snowflake_stage.internal_stage,snowflake_stage_grant.stage_grant_write,null_resource.run_query,time_sleep.wait_for_stage_creation]
-}
-
 
 # Outputs
 output "database_name" {
