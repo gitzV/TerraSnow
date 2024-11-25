@@ -51,12 +51,6 @@ jobs:
         EOF
         chmod 600 ~/.snowsql/config
 
-    - name: Verify SnowSQL installation
-      run: snowsql -v  
-
-    - name: Run SnowSQL show db Command
-      run: snowsql -q "SHOW DATABASES;"   
-          
     - name: Terraform Init
       run: terraform init
 
