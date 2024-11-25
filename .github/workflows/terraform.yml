@@ -14,42 +14,11 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.5.0
-
-    - name: Install SnowSQL
-      run: |
-        curl -O https://sfc-repo.snowflakecomputing.com/snowsql/bootstrap/1.2/linux_x86_64/snowsql-1.2.9-linux_x86_64.bash
-        SNOWSQL_DEST=~/snowflake SNOWSQL_LOGIN_SHELL=~/.profile bash snowsql-1.2.9-linux_x86_64.bash
-        echo "~/snowflake" >> $GITHUB_PATH 
-
-    - name: Configure SnowSQL
-      env:
-        SNOWSQL_ACCOUNT: gxkmoso-pb31214.snowflakecomputing.com
-        SNOWSQL_USER:  SANJAY
-        SNOWSQL_PWD:  Temp@123$ 
-      run: |
-        mkdir -p ~/.snowsql
-        cat > ~/.snowsql/config << EOF
-        [connections]
-        accountname = gxkmoso-pb31214
-        username = SANJAY
-        password = Temp@123$
-        role = ACCOUNTADMIN
-        EOF
-        chmod 600 ~/.snowsql/config
 
     - name: Terraform Init
       run: terraform init
