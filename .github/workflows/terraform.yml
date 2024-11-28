@@ -20,14 +20,11 @@ jobs:
         terraform_version: 1.5.0
 
     - name: Terraform Init
-      run: |
-        cd TF
-        run: terraform init
-
+      run: terraform -chdir=TF init
+    
     - name: Terraform Plan
-      run: |
-        cd TF
-        terraform plan -var-file="variables.tfvars"
+      run: terraform -chdir=TF plan -var-file="variables.tfvars"
+    
 
 
     - name: Terraform Apply
